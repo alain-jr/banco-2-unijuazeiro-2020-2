@@ -1,10 +1,14 @@
 package br.edu.unijuazeiro.unidelivery;
 
+import java.util.Arrays;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import br.edu.unijuazeiro.unidelivery.model.customer.Customer;
+import br.edu.unijuazeiro.unidelivery.model.order.Item;
+import br.edu.unijuazeiro.unidelivery.model.order.Order;
+import br.edu.unijuazeiro.unidelivery.model.product.Product;
 
 public final class App {
     private App() {
@@ -15,59 +19,30 @@ public final class App {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();// inicio da transação
 
-        // INSERT
-        // Customer c = new Customer();
-        // c.setName("maria");
-        // c.setEmail("maria@hotmail.com");
-        // c.setCreatedAt(new Date());
+        Order order = new Order();
 
-        // Address address = new Address();
-        // address.setStreet("R. Sao Vicente");
-        // address.setNumber("45A");
+        Product p1 = em.find(Product.class, 10);
+        Item item = new Item();
+        item.setProduct(p1);
+        item.setQuantity(1.0);
 
-        // c.setAddress(address);
+        Product p2 = em.find(Product.class, 11);
+        Item item2 = new Item();
+        item.setProduct(p2);
+        item.setQuantity(3.0);
 
-        // em.persist(c);
+        order.setItems(Arrays.asList(item, item2));
+        ///order.sumTotal();
 
-        // Product product = new Product();
-        // product.setName("Hamburgue Verde");
-        // product.setPrice(10.0);
+        // em.persist(order);
 
-        // em.persist(product);
-
-        // SELECT
-        Customer c = em.find(Customer.class, 8);
-        System.out.println("Codigo " + c.getCode());
-        System.out.println("Nome " + c.getName());
-        System.out.println("E-mail " + c.getEmail());
-        System.out.println("Rua " + c.getAddress().getStreet());
-        System.out.println("Número " + c.getAddress().getNumber());
-
-        // Address address = new Address();
-        // address.setStreet("R. Sao Benedito");
-        // address.setNumber("900");
-
-        // c.setAddress(address);
-
-        // em.merge(c);
-
-        // Product product = em.find(Product.class, 1);
-        // System.out.println(product.getName());
-
-        // product.setName("Hambúrguer Quatro Queijos");
-
-        // UPDATE AND REMOVE
-        // Customer c = em.find(Customer.class, 1);
-        // System.out.println("Nome " + c.getName());
-
-        // em.merge(c); // envia para banco
-        // em.refresh(c); // traz pra aplicacao/atualiza o objeto na aplicacao
-        // em.remove(c);
+        em.createQuery("from tb_order", Order.class).getResultList().forEach(o -> {
+            System.out.println("pedido: " + o.getCode()); 
+            System.out.println("total: " + o.getTotal());
+        });
 
         em.getTransaction().commit();
-
         em.close();
-
         emf.close();
 
     }
