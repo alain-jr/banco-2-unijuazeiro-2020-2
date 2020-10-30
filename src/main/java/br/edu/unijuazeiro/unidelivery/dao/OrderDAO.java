@@ -5,51 +5,47 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.edu.unijuazeiro.unidelivery.dao.util.ConnectionFactory;
-import br.edu.unijuazeiro.unidelivery.model.customer.Customer;
+import br.edu.unijuazeiro.unidelivery.model.order.Order;
 
-public class CustomerDAO {
+public class OrderDAO {
 
-    public void save(Customer customer) {
-        
+    public void save(Order order) {
+
         EntityManager em = ConnectionFactory.getEntityManager();
         em.getTransaction().begin();
-
-        em.persist(customer);
-
+        em.persist(order);
         em.getTransaction().commit();
         em.close();
     }
 
-    public void update(Customer customer) {
+    public void update(Order order) {
         EntityManager em = ConnectionFactory.getEntityManager();
         em.getTransaction().begin();
-
-        em.merge(customer);
-
+        em.merge(order);
         em.getTransaction().commit();
         em.close();
     }
 
-    public void remove(Customer customer) {
+    public void remove(Order order) {
         EntityManager em = ConnectionFactory.getEntityManager();
         em.getTransaction().begin();
-        Customer c = em.find(Customer.class, customer.getCode());
-        em.remove(c);
+        Order o = em.find(Order.class, order.getCode());
+        em.remove(o);
         em.getTransaction().commit();
         em.close();
     }
 
-    public Customer findById(Integer code) {
+    public Order findById(Integer code) {
         EntityManager em = ConnectionFactory.getEntityManager();
-        Customer c = em.find(Customer.class, code);
+        Order o = em.find(Order.class, code);
         em.close();
-        return c;
+        return o;
     }
 
-    public List<Customer> list() {
+    public List<Order> list() {
         EntityManager em = ConnectionFactory.getEntityManager();
-        List<Customer> customers = em.createQuery("from Customer", Customer.class).getResultList();
+        List<Order> orders = em.createQuery("from Order", Order.class).getResultList();
         em.close();
-        return customers;
+        return orders;
     }
 }

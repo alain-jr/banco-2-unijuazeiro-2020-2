@@ -1,7 +1,10 @@
 package br.edu.unijuazeiro.unidelivery;
 
 import br.edu.unijuazeiro.unidelivery.dao.CustomerDAO;
+import br.edu.unijuazeiro.unidelivery.dao.ProductDAO;
+import br.edu.unijuazeiro.unidelivery.dao.util.ConnectionFactory;
 import br.edu.unijuazeiro.unidelivery.model.customer.Customer;
+import br.edu.unijuazeiro.unidelivery.model.product.Product;
 
 public final class App {
 
@@ -9,15 +12,25 @@ public final class App {
     }
 
     public static void main(String[] args) {
-        CustomerDAO dao = new CustomerDAO();
-
+        CustomerDAO customerDAO = new CustomerDAO();
         Customer c = new Customer();
-        c.setName("Carlitos");
-        c.setEmail("carlitos@gmail.com");
-        
-        dao.save(c);
+        c.setName("Pedro");
+        c.setEmail("pedro@gmail.com");
 
-        dao.emf.close();
+        customerDAO.save(c);
+
+        System.out.println(ConnectionFactory.getEmf() + " cliente salvo!");
+
+        ProductDAO productDAO = new ProductDAO();
+        Product p = new Product();
+        p.setName("Pão Doce");
+        p.setPrice(5.0);
+
+        productDAO.save(p);
+
+        System.out.println(ConnectionFactory.getEmf() + " produto salvo!");
+
+        ConnectionFactory.close();
 
     }
 }

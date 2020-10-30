@@ -3,53 +3,55 @@ package br.edu.unijuazeiro.unidelivery.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import br.edu.unijuazeiro.unidelivery.dao.util.ConnectionFactory;
-import br.edu.unijuazeiro.unidelivery.model.customer.Customer;
+import br.edu.unijuazeiro.unidelivery.model.product.Product;
 
-public class CustomerDAO {
+public class ProductDAO {
 
-    public void save(Customer customer) {
-        
+    public void save(Product product) {
         EntityManager em = ConnectionFactory.getEntityManager();
         em.getTransaction().begin();
 
-        em.persist(customer);
+        em.persist(product);
 
         em.getTransaction().commit();
         em.close();
     }
 
-    public void update(Customer customer) {
+    public void update(Product product) {
         EntityManager em = ConnectionFactory.getEntityManager();
         em.getTransaction().begin();
 
-        em.merge(customer);
+        em.merge(product);
 
         em.getTransaction().commit();
         em.close();
     }
 
-    public void remove(Customer customer) {
+    public void remove(Product product) {
         EntityManager em = ConnectionFactory.getEntityManager();
         em.getTransaction().begin();
-        Customer c = em.find(Customer.class, customer.getCode());
-        em.remove(c);
+        Product p = em.find(Product.class, product.getCode());
+        em.remove(p);
         em.getTransaction().commit();
         em.close();
     }
 
-    public Customer findById(Integer code) {
+    public Product findById(Integer code) {
         EntityManager em = ConnectionFactory.getEntityManager();
-        Customer c = em.find(Customer.class, code);
+        Product p = em.find(Product.class, code);
         em.close();
-        return c;
+        return p;
     }
 
-    public List<Customer> list() {
+    public List<Product> list() {
         EntityManager em = ConnectionFactory.getEntityManager();
-        List<Customer> customers = em.createQuery("from Customer", Customer.class).getResultList();
+        List<Product> products = em.createQuery("from Product", Product.class).getResultList();
         em.close();
-        return customers;
+        return products;
     }
+
 }
