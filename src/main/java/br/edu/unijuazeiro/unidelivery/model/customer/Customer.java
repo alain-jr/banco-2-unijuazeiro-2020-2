@@ -35,6 +35,8 @@ public class Customer {
 
     @Column(unique = true)
     private String email;
+    
+    private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

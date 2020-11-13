@@ -1,10 +1,11 @@
 package br.edu.unijuazeiro.unidelivery;
 
-import br.edu.unijuazeiro.unidelivery.dao.CustomerDAO;
-import br.edu.unijuazeiro.unidelivery.dao.ProductDAO;
+import java.util.List;
+
 import br.edu.unijuazeiro.unidelivery.dao.util.ConnectionFactory;
 import br.edu.unijuazeiro.unidelivery.model.customer.Customer;
 import br.edu.unijuazeiro.unidelivery.model.product.Product;
+import br.edu.unijuazeiro.unidelivery.services.CustomerService;
 
 public final class App {
 
@@ -12,25 +13,46 @@ public final class App {
     }
 
     public static void main(String[] args) {
-        CustomerDAO customerDAO = new CustomerDAO();
-        Customer c = new Customer();
-        c.setName("Pedro");
-        c.setEmail("pedro@gmail.com");
+        CustomerService customerService = new CustomerService();
+        // Customer c = new Customer();
+        // c.setName("Pedro");
+        // c.setEmail("pedro@gmail.com");
 
-        customerDAO.save(c);
+        // customerDAO.save(c);
 
-        System.out.println(ConnectionFactory.getEmf() + " cliente salvo!");
+        // System.out.println(ConnectionFactory.getEmf() + " cliente salvo!");
 
-        ProductDAO productDAO = new ProductDAO();
-        Product p = new Product();
-        p.setName("Pão Doce");
-        p.setPrice(5.0);
+        // ProductDAO productDAO = new ProductDAO();
+        // Product p = new Product();
+        // p.setName("Pão Doce");
+        // p.setPrice(5.0);
 
-        productDAO.save(p);
+        // productDAO.save(p);
 
-        System.out.println(ConnectionFactory.getEmf() + " produto salvo!");
+        // System.out.println(ConnectionFactory.getEmf() + " produto salvo!");
+        // Customer c = customerDAO.findByEmail("pedro2@gmail.com");
+        // if (c != null) {
+        // System.out.println(c.getName());
+        // System.out.println(c.getEmail());
+        // }
+        // List<Customer> customers = customerService.list();
+        // customers.forEach(c -> {
+        //     System.out.println(c.getCode());
+        //     System.out.println(c.getName());
+        //     System.out.println(c.getEmail());
+
+        //     System.out.println("> " + c.getPassword());
+        //     // try {
+        //     //     c.setPassword("123456");
+        //     //     System.out.println("> " + c.getPassword());
+        //     //     customerService.update(c);
+        //     // } catch (Exception e) {
+        //     //     System.out.println(e.getMessage());
+        //     // }
+        // });
+
+        System.out.println(customerService.login("pedro@gmail.com", "123456"));
 
         ConnectionFactory.close();
-
     }
 }
